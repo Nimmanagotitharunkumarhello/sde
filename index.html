@@ -1,0 +1,1784 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SWE Lab Master v3 — UML + Java Code (S11BLH51)</title>
+    <style>
+        :root {
+            --bg: #f0f4f8;
+            --card: #fff;
+            --txt: #1a202c;
+            --sub: #4a5568;
+            --pri: #7c3aed;
+            --ok: #16a34a;
+            --border: #e2e8f0;
+            --term: #0a0a0a;
+            --termtx: #d4d4d4
+        }
+
+        body.dark {
+            --bg: #0b1120;
+            --card: #111a2e;
+            --txt: #e2e8f0;
+            --sub: #94a3b8;
+            --border: #1e293b;
+            --term: #000
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        body {
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--txt);
+            transition: .3s
+        }
+
+        header {
+            background: linear-gradient(135deg, #4c1d95, #7c3aed, #d946ef);
+            color: #fff;
+            padding: 24px 16px;
+            text-align: center
+        }
+
+        header h1 {
+            font-size: 1.4rem
+        }
+
+        header p {
+            opacity: .92;
+            font-size: .85rem;
+            margin-top: 4px
+        }
+
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: var(--card);
+            border-bottom: 2px solid var(--border);
+            padding: 10px 16px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center
+        }
+
+        #search {
+            flex: 1;
+            min-width: 160px;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 2px solid var(--border);
+            background: var(--bg);
+            color: var(--txt);
+            font-size: 1rem
+        }
+
+        .btn {
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: none;
+            background: var(--pri);
+            color: #fff;
+            cursor: pointer;
+            font-weight: 600
+        }
+
+        .btn.gold {
+            background: linear-gradient(135deg, #f59e0b, #f97316);
+            color: #fff
+        }
+
+        .btn.ghost {
+            background: transparent;
+            color: var(--txt);
+            border: 2px solid var(--border)
+        }
+
+        .progwrap {
+            padding: 12px 16px;
+            background: var(--card);
+            border-bottom: 1px solid var(--border)
+        }
+
+        .pbar {
+            height: 10px;
+            background: var(--border);
+            border-radius: 99px;
+            overflow: hidden
+        }
+
+        .pfill {
+            height: 100%;
+            background: linear-gradient(90deg, #16a34a, #22c55e);
+            width: 0%;
+            transition: .4s
+        }
+
+        .ptxt {
+            font-size: .85rem;
+            color: var(--sub);
+            margin-top: 6px
+        }
+
+        main {
+            max-width: 920px;
+            margin: 0 auto;
+            padding: 16px
+        }
+
+        .exp {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin: 14px 0;
+            overflow: hidden;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, .06)
+        }
+
+        .ehead {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 13px;
+            cursor: pointer;
+            user-select: none
+        }
+
+        .ehead:hover {
+            background: rgba(124, 58, 237, .06)
+        }
+
+        .num {
+            background: var(--pri);
+            color: #fff;
+            min-width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            flex-shrink: 0
+        }
+
+        .ehead h3 {
+            flex: 1;
+            font-size: .95rem;
+            line-height: 1.3
+        }
+
+        .arrow {
+            transition: .3s;
+            color: var(--sub)
+        }
+
+        .ebody {
+            display: none;
+            padding: 0 16px 16px;
+            border-top: 1px solid var(--border)
+        }
+
+        .exp.open .ebody {
+            display: block
+        }
+
+        .exp.open .arrow {
+            transform: rotate(180deg)
+        }
+
+        .tag {
+            display: inline-block;
+            font-size: .7rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 99px;
+            margin: 2px 4px 2px 0
+        }
+
+        .t-easy {
+            background: #dcfce7;
+            color: #166534
+        }
+
+        .t-med {
+            background: #fef9c3;
+            color: #854d0e
+        }
+
+        .t-th {
+            background: #e0e7ff;
+            color: #3730a3
+        }
+
+        .t-uc {
+            background: #ffedd5;
+            color: #9a3412
+        }
+
+        .t-java {
+            background: #dbeafe;
+            color: #1e40af
+        }
+
+        body.dark .t-easy {
+            background: #052e16;
+            color: #86efac
+        }
+
+        body.dark .t-med {
+            background: #422006;
+            color: #fde047
+        }
+
+        body.dark .t-th {
+            background: #1e1b4b;
+            color: #a5b4fc
+        }
+
+        body.dark .t-uc {
+            background: #431407;
+            color: #fdba74
+        }
+
+        body.dark .t-java {
+            background: #172554;
+            color: #93c5fd
+        }
+
+        .ebody h4 {
+            margin: 13px 0 6px;
+            color: var(--pri);
+            font-size: .85rem;
+            text-transform: uppercase;
+            letter-spacing: .5px
+        }
+
+        .ebody h4.java {
+            color: #1d4ed8
+        }
+
+        .ebody p,
+        .ebody li {
+            font-size: .9rem;
+            line-height: 1.55;
+            color: var(--txt)
+        }
+
+        .ebody ul {
+            padding-left: 20px;
+            margin: 4px 0
+        }
+
+        .cmd,
+        .term,
+        .topo {
+            position: relative;
+            margin: 10px 0
+        }
+
+        .cmd pre {
+            background: var(--term);
+            color: var(--termtx);
+            padding: 14px 14px 14px 16px;
+            border-radius: 10px;
+            overflow-x: auto;
+            font-size: .8rem;
+            line-height: 1.5;
+            font-family: ui-monospace, Consolas, monospace
+        }
+
+        .term pre {
+            background: var(--term);
+            color: var(--termtx);
+            padding: 14px;
+            border-radius: 10px;
+            border-left: 4px solid #22c55e;
+            overflow-x: auto;
+            font-size: .8rem;
+            line-height: 1.55;
+            font-family: ui-monospace, Consolas, monospace;
+            white-space: pre
+        }
+
+        .term::before {
+            content: "📝 WRITE THIS IN EXAM";
+            display: block;
+            font-size: .68rem;
+            font-weight: 700;
+            color: #22c55e;
+            background: var(--term);
+            padding: 6px 14px 0;
+            border-radius: 10px 10px 0 0
+        }
+
+        .topo pre {
+            background: #1e293b;
+            color: #7dd3fc;
+            padding: 14px;
+            border-radius: 10px;
+            overflow-x: auto;
+            font-size: .76rem;
+            line-height: 1.5;
+            font-family: ui-monospace, Consolas, monospace;
+            text-align: center;
+            white-space: pre
+        }
+
+        .topo::before {
+            content: "🗺️ DIAGRAM";
+            display: block;
+            font-size: .68rem;
+            font-weight: 700;
+            color: #7dd3fc;
+            background: #1e293b;
+            padding: 6px 14px 0;
+            border-radius: 10px 10px 0 0
+        }
+
+        .copy {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            padding: 5px 10px;
+            font-size: .72rem;
+            border: none;
+            border-radius: 6px;
+            background: #2563eb;
+            color: #fff;
+            cursor: pointer;
+            opacity: .9;
+            z-index: 2
+        }
+
+        .copy:hover {
+            opacity: 1;
+            background: #1d4ed8
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 8px 0;
+            font-size: .82rem
+        }
+
+        th,
+        td {
+            border: 1px solid var(--border);
+            padding: 6px 8px;
+            text-align: left;
+            vertical-align: top
+        }
+
+        th {
+            background: rgba(124, 58, 237, .1)
+        }
+
+        .tip {
+            background: rgba(22, 163, 74, .08);
+            border-left: 4px solid var(--ok);
+            padding: 9px 12px;
+            border-radius: 0 8px 8px 0;
+            margin: 9px 0;
+            font-size: .85rem
+        }
+
+        .warn {
+            background: rgba(234, 179, 8, .1);
+            border-left: 4px solid #eab308;
+            padding: 9px 12px;
+            border-radius: 0 8px 8px 0;
+            margin: 9px 0;
+            font-size: .85rem
+        }
+
+        .cheat {
+            background: linear-gradient(135deg, #4c1d95, #7c3aed);
+            color: #fff;
+            border-radius: 12px;
+            padding: 18px;
+            margin: 20px 0
+        }
+
+        .cheat h3 {
+            margin-bottom: 8px
+        }
+
+        .cheat li {
+            font-size: .88rem;
+            margin: 6px 0
+        }
+
+        .notecard {
+            background: rgba(124, 58, 237, .06);
+            border: 2px dashed var(--pri);
+            border-radius: 12px;
+            padding: 14px 16px;
+            margin: 14px 0;
+            font-size: .9rem
+        }
+
+        footer {
+            text-align: center;
+            color: var(--sub);
+            font-size: .78rem;
+            padding: 24px
+        }
+
+        #pdfModal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .75);
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+            padding: 20px
+        }
+
+        .pdfwrap {
+            background: var(--card);
+            border-radius: 12px;
+            width: 100%;
+            max-width: 900px;
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden
+        }
+
+        .pdfhead {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border)
+        }
+
+        .pdfhead b {
+            color: var(--pri)
+        }
+
+        .pdfwrap iframe {
+            flex: 1;
+            border: none;
+            width: 100%
+        }
+
+        .pdfnote {
+            font-size: .8rem;
+            color: var(--sub);
+            padding: 8px 14px
+        }
+
+        @media(max-width:600px) {
+            .ehead h3 {
+                font-size: .85rem
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>📐 SWE Lab Master v3</h1>
+        <p>S11BLH51 — UML Diagrams + ☕ Java Code for all experiments • Copy-ready</p>
+    </header>
+
+    <div class="topbar">
+        <input id="search" placeholder="🔍 Search… (atm, passport, java, use case…)">
+        <button class="btn gold" onclick="openPDF()">📖 Manual PDF</button>
+        <a href="manual.pdf" target="_blank" class="btn ghost" style="text-decoration:none" title="Open Manual in a new browser tab">↗ Open in Tab</a>
+        <button class="btn ghost" onclick="toggleTheme()">🌙/☀️</button>
+        <button class="btn ghost" onclick="toggleAll()">Expand All</button>
+    </div>
+
+    <div class="progwrap">
+        <div class="pbar">
+            <div class="pfill" id="pfill"></div>
+        </div>
+        <div class="ptxt" id="ptxt">Progress: 0 / 9 — tick ✅ on each finished card!</div>
+    </div>
+
+    <main id="list">
+
+        <div class="notecard">📌 <b>Manual PDF:</b> The lab manual is linked and ready! Click <b>📖 Manual PDF</b> to preview or <b>↗ Open in Tab</b> to view in full screen.<br>☕ <b>Java:</b> every card has a <b>Copy Code</b> button. Save each file as its <b>public
+                class name</b> (e.g. <b>BookBank.java</b>) → run: <b>javac BookBank.java</b> then <b>java BookBank</b>
+        </div>
+
+        <!-- ============ 1a ============ -->
+        <div class="exp">
+            <div class="ehead" onclick="tg(this)"><span class="num">1a</span>
+                <h3>OO Concepts (+ Java Demo)</h3><label onclick="event.stopPropagation()"><input type="checkbox"
+                        class="done" onchange="track()"></label><span class="arrow">▾</span>
+            </div>
+            <div class="ebody">
+                <span class="tag t-th">THEORY</span><span class="tag t-java">☕ JAVA</span>
+                <h4>Aim</h4>
+                <p>To study about the object-oriented concepts.</p>
+                <h4>Core idea</h4>
+                <p><b>Goal of OO:</b> Reduce complexity of software development by keeping details (and changes to
+                    details) from spreading throughout the entire program.</p>
+                <h4>Definitions</h4>
+                <ul>
+                    <li><b>Client Code</b> — the code that uses the classes under discussion</li>
+                    <li><b>Coupling</b> — code in one module depends on code in another; change in one forces
+                        rewrite/recompile of the other</li>
+                </ul>
+                <h4>The 4 Key Concepts (A-E-I-P)</h4>
+                <table>
+                    <tr>
+                        <th>Concept</th>
+                        <th>Meaning</th>
+                        <th>Key line</th>
+                    </tr>
+                    <tr>
+                        <td><b>1. Abstraction</b></td>
+                        <td>Responsibilities (interface) ≠ implementation</td>
+                        <td>Class provides services via public interface; internals don't matter</td>
+                    </tr>
+                    <tr>
+                        <td><b>2. Encapsulation</b></td>
+                        <td>Protect implementation from interference</td>
+                        <td><b>private</b> access = wall around internals</td>
+                    </tr>
+                    <tr>
+                        <td><b>3. Inheritance</b></td>
+                        <td>Share interface/implementation in related classes</td>
+                        <td>Functionality written once in base class, reused in descendants</td>
+                    </tr>
+                    <tr>
+                        <td><b>4. Polymorphism</b></td>
+                        <td>Decouple client from exact class structure</td>
+                        <td>Client uses base-class interface; derived classes implement differently</td>
+                    </tr>
+                </table>
+                <h4>Design thinking rules</h4>
+                <div class="term">
+                    <pre>1. Think of at least TWO reasonable ways to solve each design problem
+2. "Reasonable" = "not obviously stupid"
+3. Don't jump on the first design and hack it out
+4. All designs are imperfect — they involve TRADE-OFFS
+5. A good design is good in the MOST important ways
+6. There may be more than one good design — different trade-offs
+7. You can't choose intelligently if you thought of only ONE design</pre>
+                </div>
+                <h4 class="java">☕ Java Demo — OOPDemo.java (shows all 4 concepts)</h4>
+                <div class="cmd"><button class="copy" onclick="cp(this)">Copy Code</button>
+                    <pre>// File: OOPDemo.java
+abstract class Shape {                          // ABSTRACTION (interface only)
+    abstract double area();
+}
+
+class Circle extends Shape {                    // INHERITANCE
+    private double radius;                      // ENCAPSULATION (private data)
+    Circle(double r){ radius = r; }
+    double area(){ return 3.14 * radius * radius; }   // POLYMORPHISM (override)
+}
+
+class Rectangle extends Shape {
+    private double l, b;
+    Rectangle(double l, double b){ this.l = l; this.b = b; }
+    double area(){ return l * b; }
+}
+
+public class OOPDemo {
+    public static void main(String[] args){
+        Shape[] s = { new Circle(5), new Rectangle(4, 6) };
+        for(Shape x : s)                        // RUNTIME POLYMORPHISM
+            System.out.println("Area = " + x.area());
+    }
+}</pre>
+                </div>
+                <div class="tip">💡 Run output: <b>Area = 78.5</b> and <b>Area = 24.0</b>. Point at the comments — each
+                    OOP concept is marked where it happens!</div>
+                <p><b>Result:</b> Studied the object-oriented concepts.</p>
+            </div>
+        </div>
+
+        <!-- ============ 1b ============ -->
+        <div class="exp">
+            <div class="ehead" onclick="tg(this)"><span class="num">1b</span>
+                <h3>Study of UML Diagrams — Aim &amp; Scope</h3><label onclick="event.stopPropagation()"><input
+                        type="checkbox" class="done" onchange="track()"></label><span class="arrow">▾</span>
+            </div>
+            <div class="ebody">
+                <span class="tag t-th">THEORY</span><span class="tag t-easy">⭐ EXAM FAVORITE</span>
+                <h4>Aim</h4>
+                <p>General study of UML.</p>
+                <h4>Why UML? (write this analogy)</h4>
+                <p>Like <b>architects' blueprints</b> for buildings — the more complicated the system, the more critical
+                    the communication. UML = the <b>software blueprint language</b> giving analysts, designers,
+                    programmers a common vocabulary.</p>
+                <h4>Key definitions</h4>
+                <ul>
+                    <li><b>Model</b> = abstraction of the underlying problem • <b>Domain</b> = actual world the problem
+                        comes from</li>
+                    <li><b>Object</b> = attributes (knows) + behaviors (does); attribute values = state</li>
+                    <li><b>Class</b> = "blueprint" for objects; wraps attributes + behaviors; objects = instances</li>
+                    <li><b>UML notation:</b> Unified Modeling Language • notations &amp; conventions to model an
+                        application • universal standard for OO • does NOT specify methodology</li>
+                </ul>
+                <h4>The 9 kinds of UML diagrams</h4>
+                <div class="term">
+                    <pre>UML DIAGRAMS (9 kinds)
+├── Class Diagram                    (static structure)
+├── Use Case Diagram
+├── Behavioral Diagrams
+│    ├── Interaction Diagrams
+│    │     ├── Sequence Diagram
+│    │     └── Collaboration Diagram
+│    ├── State Chart Diagram
+│    └── Activity Diagram
+└── Implementation Diagrams
+      ├── Component Diagram
+      └── Deployment Diagram</pre>
+                </div>
+                <h4>One-line definitions</h4>
+                <table>
+                    <tr>
+                        <th>Diagram</th>
+                        <th>Definition</th>
+                    </tr>
+                    <tr>
+                        <td><b>Class</b></td>
+                        <td>Static structure; classes + relationships as a graph; 3 compartments: name / attributes /
+                            operations</td>
+                    </tr>
+                    <tr>
+                        <td><b>Use Case</b></td>
+                        <td>Use cases (ellipses) in system boundary + actor associations</td>
+                    </tr>
+                    <tr>
+                        <td><b>Sequence</b></td>
+                        <td>Behavior in time sequence; vertical = time, horizontal = objects; lifeline = object's
+                            existence</td>
+                    </tr>
+                    <tr>
+                        <td><b>Collaboration</b></td>
+                        <td>Order of messages implementing an operation; objects, links, messages; object = state,
+                            behavior, identity</td>
+                    </tr>
+                    <tr>
+                        <td><b>State Chart</b></td>
+                        <td>Dynamic behavior of one class; sequences of states, events, actions</td>
+                    </tr>
+                    <tr>
+                        <td><b>Activity</b></td>
+                        <td>Sequence of activities in a process; special case of state machine; swim lanes = roles</td>
+                    </tr>
+                    <tr>
+                        <td><b>Component</b></td>
+                        <td>Physical components; dependency graph; packages = class grouping</td>
+                    </tr>
+                    <tr>
+                        <td><b>Deployment</b></td>
+                        <td>Runtime configuration; nodes connected by communication associations; 3D boxes</td>
+                    </tr>
+                </table>
+                <h4>Notation cheat sheet</h4>
+                <div class="topo">
+                    <pre>ACTOR = stick figure    USE CASE = ellipse    CLASS = rectangle (3 compartments)
+GENERALIZATION ────▷ (hollow triangle → parent)     ASSOCIATION ──────►
+INCLUDE/EXTEND - - -▷ (dashed)     START ●   END ◉
+COMPONENT = box with tabs     DEPLOYMENT NODE = 3-D cube
+Use case relations: Communication (line) | Uses (generalization) | Extends (dashed, does MORE)</pre>
+                </div>
+                <h4>☕ Java</h4>
+                <p>1(b) is theory-only. If the examiner demands code, run <b>OOPDemo.java</b> from card 1a — it
+                    demonstrates all 4 OOP concepts.</p>
+                <p><b>Result:</b> Studied the aim and scope of UML diagrams.</p>
+            </div>
+        </div>
+
+        <!-- ============ 2 BOOK BANK ============ -->
+        <div class="exp">
+            <div class="ehead" onclick="tg(this)"><span class="num">2</span>
+                <h3>Book Bank System</h3><label onclick="event.stopPropagation()"><input type="checkbox" class="done"
+                        onchange="track()"></label><span class="arrow">▾</span>
+            </div>
+            <div class="ebody">
+                <span class="tag t-uc">ALL DIAGRAMS</span><span class="tag t-java">☕ JAVA</span>
+                <h4>Aim</h4>
+                <p>To create a system to perform book bank operation.</p>
+                <h4>Problem (2 lines)</h4>
+                <p>Book Bank lends books/magazines to <b>registered members</b>; purchases new titles (popular =
+                    multiple copies); removes old/damaged ones. Members can <b>reserve</b> unavailable books &amp; get
+                    notified. CRUD on titles, members, loans, reservations.</p>
+                <h4>Actors &amp; Use Cases</h4>
+                <div class="topo">
+                    <pre>[customer]───►(login)(request book)(book details)(collect books)
+[publisher]──►(order book)
+[librarian]──►(order book)(issue book)
+[computer] ──►(database)</pre>
+                </div>
+                <h4>Class Diagram</h4>
+                <table>
+                    <tr>
+                        <th>Class</th>
+                        <th>Attributes</th>
+                        <th>Operations</th>
+                    </tr>
+                    <tr>
+                        <td><b>BookBank</b></td>
+                        <td>pinNo:int, noOfBooks, bookName, data:int, fine:int, author, codeNo:int</td>
+                        <td>validity(), issueBook(), return(), student(), details()</td>
+                    </tr>
+                    <tr>
+                        <td><b>validity</b></td>
+                        <td>spinNo:int</td>
+                        <td>checkValidity(), validity()</td>
+                    </tr>
+                    <tr>
+                        <td><b>Details</b></td>
+                        <td>bookname, author, bcodeNo:int</td>
+                        <td>displayDet(), Details()</td>
+                    </tr>
+                    <tr>
+                        <td><b>BookIssue</b></td>
+                        <td>noOfBooks, bookName</td>
+                        <td>checkNoOfBooks(), issueBooks(), BookIssue()</td>
+                    </tr>
+                    <tr>
+                        <td><b>BookReturn</b></td>
+                        <td>date:int, fine:int</td>
+                        <td>checkDate(), returnDate(), BookReturn()</td>
+                    </tr>
+                    <tr>
+                        <td><b>Students</b></td>
+                        <td>name, dept, year:int, bcodeno:int</td>
+                        <td>displayStudents(), Students()</td>
+                    </tr>
+                </table>
+                <div class="term">
+                    <pre>SEQUENCE FLOW (14 messages):
+ 1. Student → BookBank    : pin no          8. BookIssue → BookBank  : no
+ 2. BookBank → validity   : check pin       9. BookIssue → Student   : book issue
+ 3. validity → BookBank   : no             10. BookIssue → BookBank  : yes
+ 4. Librarian → validity  : validate pwd   11. BookBank → BookReturn : check date
+ 5. BookBank → Student    : get valid pin  12. BookReturn → BookBank : pay the fine
+ 6. validity → BookBank   : yes            13. BookReturn → Student  : book return
+ 7. BookBank → BookIssue  : check books    14. Librarian → Student   : renewed</pre>
+                </div>
+                <h4>Activity / Architecture / Deployment / Component</h4>
+                <div class="topo">
+                    <pre>ACTIVITY: ● → login → fork ─┬→ view book status → ◇ available? ─ yes → return your book ─┐
+                            ├→ return books → book updation                              │
+                            └→ database                                                  ▼
+        book issue → receiving books → join (bar) → ◉
+
+ARCH: UI(Swing:BookBank system|Text:BkBank Console) → Domain(Student|BookBank|Validity|BookDetails)
+      → Technical Services(Persistence:DBFacade|SOAP|Log4J)
+
+DEPLOY:  <<database>>:MySQL ──SQL── <<server>>:Tomcat6 ──HTTP── <<client>>:GenericPC
+COMPONENT: [Transaction] ──► [Member] ; [Transaction] ──► [Catalogue]</pre>
+                </div>
+                <h4 class="java">☕ Java — BookBank.java (PIN: 1234)</h4>
+                <div class="cmd"><button class="copy" onclick="cp(this)">Copy Code</button>
+                    <pre>// File: BookBank.java
+import java.util.Scanner;
+
+class Validity {
+    int spinNo = 1234;
+    boolean checkValidity(int pin){ return spinNo == pin; }
+}
+
+class Details {
+    String bookName, author; int bcodeNo;
+    Details(String b, String a, int c){ bookName = b; author = a; bcodeNo = c; }
+    void displayDet(){ System.out.println("Code " + bcodeNo + " : " + bookName + " by " + author); }
+}
+
+class BookIssue {
+    int noOfBooks = 0;
+    boolean checkNoOfBooks(){ return noOfBooks &lt; 3; }      // max 3 books per student
+    void issueBooks(String b){
+        noOfBooks++;
+        System.out.println("&gt;&gt; Book ISSUED: " + b + " (books with student: " + noOfBooks + ")");
+    }
+}
+
+class BookReturn {
+    double fine;
+    void returnDate(int due, int ret){
+        if(ret &gt; due){ fine = (ret - due) * 5.0;
+            System.out.println("&gt;&gt; Late return! Fine = Rs." + fine); }
+        else System.out.println("&gt;&gt; Returned on time. No fine.");
+    }
+}
+
+class Students {
+    String name, dept; int year;
+    Students(String n, String d, int y){ name = n; dept = d; year = y; }
+    void displayStudents(){ System.out.println("&gt;&gt; Student: " + name + " | " + dept + " | Year " + year); }
+}
+
+public class BookBank {
+    public static void main(String[] args){
+        Scanner sc = new Scanner(System.in);
+        Validity v = new Validity();
+        Details[] books = { new Details("Java", "Gosling", 101),
+                            new Details("Networks", "Tanenbaum", 102),
+                            new Details("SWE", "Pressman", 103) };
+
+        System.out.println("===== BOOK BANK SYSTEM =====");
+        System.out.print("Enter PIN: ");
+        int pin = sc.nextInt();
+        if(!v.checkValidity(pin)){ System.out.println("Invalid PIN! Access denied."); return; }
+        System.out.println("Login successful.\n--- Book Bank Catalogue ---");
+        for(Details d : books) d.displayDet();
+
+        System.out.print("Enter book code to issue (101-103): ");
+        int c = sc.nextInt();
+        Details chosen = null;
+        for(Details d : books) if(d.bcodeNo == c) chosen = d;
+        if(chosen == null){ System.out.println("Invalid code!"); return; }
+
+        BookIssue bi = new BookIssue();
+        if(bi.checkNoOfBooks()){
+            bi.issueBooks(chosen.bookName);
+            new Students("Arun", "CSE", 3).displayStudents();
+            System.out.print("Enter due date (day no): ");   int due = sc.nextInt();
+            System.out.print("Enter return date (day no): "); int ret = sc.nextInt();
+            new BookReturn().returnDate(due, ret);
+            System.out.println("&gt;&gt; Book renewed. Thank you!");
+        } else System.out.println("&gt;&gt; Limit reached (max 3 books)!");
+    }
+}</pre>
+                </div>
+                <p><b>Result:</b> Thus, the Book Bank System has been successfully executed and generated.</p>
+            </div>
+        </div>
+
+        <!-- ============ 3 EXAM REG ============ -->
+        <div class="exp">
+            <div class="ehead" onclick="tg(this)"><span class="num">3</span>
+                <h3>Exam Registration System</h3><label onclick="event.stopPropagation()"><input type="checkbox"
+                        class="done" onchange="track()"></label><span class="arrow">▾</span>
+            </div>
+            <div class="ebody">
+                <span class="tag t-uc">ALL DIAGRAMS</span><span class="tag t-java">☕ JAVA</span>
+                <h4>Aim</h4>
+                <p>To create a system to perform the Exam Registration system.</p>
+                <h4>Problem (2 lines)</h4>
+                <p>Dispatches registration forms to all students; minimizes manual work. Core: online registration form
+                    (name, reg.no etc.) filled by student, verified for genuineness against existing database info.</p>
+                <h4>Use cases</h4>
+                <div class="term">
+                    <pre>Login | View exam details | View fees details | Pay fee | Display details | Logout
++ Register, Maintain exam details    ACTORS: Student | Exam Controller</pre>
+                </div>
+                <h4>Class Diagram</h4>
+                <table>
+                    <tr>
+                        <th>Class</th>
+                        <th>Attributes</th>
+                        <th>Operations</th>
+                    </tr>
+                    <tr>
+                        <td><b>Student</b></td>
+                        <td>id, password, name, age, sex, course</td>
+                        <td>login(), logout(), confirmation(), register(), newFeesDetails(), Student()</td>
+                    </tr>
+                    <tr>
+                        <td><b>ExamController</b></td>
+                        <td>userid, password, examFees, feesdue</td>
+                        <td>login(), logout(), feesdetails(), displayFees(), confirmation(), ExamController()</td>
+                    </tr>
+                </table>
+                <div class="term">
+                    <pre>SEQUENCE FLOW (7 messages):
+1. Student → Database       : login
+2. Database → Student       : confirmation
+3. Student → ExamController : pay
+4. ExamController → Database: register
+5. Database → ExamController: conformation
+6. Student → Database       : view exam details
+7. Student → Database       : logout</pre>
+                </div>
+                <h4>Activity / Architecture / Deployment</h4>
+                <div class="topo">
+                    <pre>ACTIVITY: ● → registration → new registration → fork ─┬→ get registration receipt
+        └→ student details → join → exam → fork ─┬→ obtain exam dates
+        └→ get exam results → join → enroll a student → upload repository fees
+        → update news → get UEGES news → ◉
+
+ARCH: UI(Swing:ExamReg System|Text:ExamReg Console) → Domain(Student|ExamController|Authentication)
+      → Technical Services(Persistence:DBFacade|SOAP|Log4J)
+DEPLOY: <<database>>:MySQL ──SQL── <<server>>:Tomcat6 ──HTTP── <<client>>:GenericPC</pre>
+                </div>
+                <h4 class="java">☕ Java — ExamRegistration.java (password: pass123)</h4>
+                <div class="cmd"><button class="copy" onclick="cp(this)">Copy Code</button>
+                    <pre>// File: ExamRegistration.java
+import java.util.Scanner;
+
+class Student {
+    int id, age; String password, name, sex, course;
+    Student(int id, String pw, String name, int age, String sex, String course){
+        this.id = id; this.password = pw; this.name = name;
+        this.age = age; this.sex = sex; this.course = course;
+    }
+    boolean login(String pw){ return password.equals(pw); }
+    void register(){ System.out.println("&gt;&gt; " + name + " registered for " + course + " exam."); }
+    void confirmation(){ System.out.println("&gt;&gt; Confirmation sent to " + name + " (ID " + id + ")."); }
+    void logout(){ System.out.println("&gt;&gt; " + name + " logged out."); }
+}
+
+class ExamController {
+    String userid = "examadmin", password = "admin@123";
+    double examFees = 500.0, feesDue;
+    void feesdetails(){ System.out.println("&gt;&gt; Exam fee: Rs." + examFees); }
+    void displayFees(double paid){
+        feesDue = examFees - paid;
+        System.out.println("&gt;&gt; Paid: Rs." + paid + " | Balance due: Rs." + feesDue);
+    }
+    void confirmation(String n){ System.out.println("&gt;&gt; ExamController: " + n + "'s registration stored in database."); }
+}
+
+public class ExamRegistration {
+    public static void main(String[] args){
+        Scanner sc = new Scanner(System.in);
+        Student s = new Student(101, "pass123", "Ravi", 20, "M", "S11BLH51");
+        ExamController ec = new ExamController();
+
+        System.out.println("===== EXAM REGISTRATION SYSTEM =====");
+        System.out.print("Student " + s.name + ", enter password: ");
+        if(!s.login(sc.nextLine())){ System.out.println("Login failed!"); return; }
+        System.out.println("Login successful.\n--- Exam Details ---");
+        System.out.println("Course: " + s.course + " | Exam: Semester (Nov 2025)");
+        ec.feesdetails();
+
+        System.out.print("Enter amount to pay: Rs.");
+        double paid = sc.nextDouble();
+        ec.displayFees(paid);
+        s.register();
+        ec.confirmation(s.name);
+        s.confirmation();
+        s.logout();
+    }
+}</pre>
+                </div>
+                <p><b>Result:</b> Thus, the Exam Registration system has been successfully executed and generated.</p>
+            </div>
+        </div>
+
+        <!-- ============ 4 COURSE ============ -->
+        <div class="exp">
+            <div class="ehead" onclick="tg(this)"><span class="num">4</span>
+                <h3>Online Course Registration System</h3><label onclick="event.stopPropagation()"><input
+                        type="checkbox" class="done" onchange="track()"></label><span class="arrow">▾</span>
+            </div>
+            <div class="ebody">
+                <span class="tag t-uc">ALL DIAGRAMS + SRS</span><span class="tag t-java">☕ JAVA</span>
+                <h4>Aim</h4>
+                <p>To develop the problem statement for Online Course Registration System.</p>
+                <h4>Problem + SRS purpose</h4>
+                <p>Students apply online → system lists courses → check seats → login &amp; fill application →
+                    eligibility check → payment → acknowledgement to student AND registrar.<br><b>SRS 1.1 Purpose:</b>
+                    Direct communication consumes time &amp; man power; the Automated system provides a smart,
+                    efficient, convenient way to reserve courses online.</p>
+                <h4>Class Diagram</h4>
+                <table>
+                    <tr>
+                        <th>Class</th>
+                        <th>Attributes</th>
+                        <th>Operations</th>
+                    </tr>
+                    <tr>
+                        <td><b>Student</b></td>
+                        <td>St_name, St_id, qualification, St_Address1/2/3, St_mobileno, St_emailid, St_dob, St_sex</td>
+                        <td>addStDetails(), modifyStDetails(), delStDetails(), reserveCourse()</td>
+                    </tr>
+                    <tr>
+                        <td><b>Course Catalog</b></td>
+                        <td>Course_id, Course_name, Course_duration, Course_fee, Course_eligibilitycriteria,
+                            Total_nodofseats, Course_availSeats</td>
+                        <td>addCourse(), updateCourse(), delCourse()</td>
+                    </tr>
+                    <tr>
+                        <td><b>ReserveCourse</b></td>
+                        <td>St_id, Course_id, Date, AmtPaid, Reg_id, DDno</td>
+                        <td>getCourseDetails(), checkEligibility(), confirmRegistration()</td>
+                    </tr>
+                </table>
+                <div class="term">
+                    <pre>SEQUENCE FLOW (7 messages):
+1. Student → Login          : enter uname &amp; pwd
+2. Login → Course portal    : display course details
+3. Course portal            : course available checking
+4. Course portal → Database : course registration
+5. Database → Course portal : successful registration
+6. Database → Course portal : course updated
+7. Database → Student       : acknowledgment informed</pre>
+                </div>
+                <h4>Activity (swim lanes Login|Course selection|Result) + Collaboration</h4>
+                <div class="topo">
+                    <pre>ACTIVITY: ● → Enter user &amp; pwd → ◇ crt? ─ No → ◉
+   Yes → View Course → Select Course → ◇ avail? ─ Yes → Course allocated → ◇ else? ─ Yes → Exit → ◉
+                                        └ No → Course not allocated ─┘
+COLLAB: 1.Username&amp;Pwd 2.Checks login 3.Authentication approved 4.Displays courses
+        5.Course Updation 6.opens courses 7.Course available 8.Registers 9.Course updation 10.Ack</pre>
+                </div>
+                <h4 class="java">☕ Java — CourseRegistration.java (Course 502 has 0 seats → test "not available")</h4>
+                <div class="cmd"><button class="copy" onclick="cp(this)">Copy Code</button>
+                    <pre>// File: CourseRegistration.java
+import java.util.Scanner;
+
+class CourseCatalog {
+    int[]    courseId   = {501, 502, 503};
+    String[] courseName = {"Java Programming", "Computer Networks", "Software Engineering"};
+    double[] courseFee  = {1500, 1200, 1000};
+    int[]    availSeats = {2, 0, 1};
+    String[] eligibility = {"CSE", "ANY", "CSE"};
+
+    void viewCourses(){
+        System.out.println("--- Course Catalogue ---");
+        for(int i = 0; i &lt; courseName.length; i++)
+            System.out.println(courseId[i] + " | " + courseName[i] + " | Rs." + courseFee[i]
+                + " | Seats: " + availSeats[i] + " | Eligibility: " + eligibility[i]);
+    }
+    boolean isAvailable(int id){
+        for(int i = 0; i &lt; courseId.length; i++)
+            if(courseId[i] == id) return availSeats[i] &gt; 0;
+        return false;
+    }
+    double feeOf(int id){
+        for(int i = 0; i &lt; courseId.length; i++)
+            if(courseId[i] == id) return courseFee[i];
+        return 0;
+    }
+    String criteriaOf(int id){
+        for(int i = 0; i &lt; courseId.length; i++)
+            if(courseId[i] == id) return eligibility[i];
+        return "ANY";
+    }
+}
+
+class ReserveCourse {
+    int stId, regId = 5001; String courseId; double amtPaid;
+    boolean checkEligibility(String dept, String criteria){
+        return criteria.equals("ANY") || criteria.equalsIgnoreCase(dept);
+    }
+    void confirmRegistration(String sName, int id, String cId, double paid){
+        stId = id; courseId = cId; amtPaid = paid;
+        System.out.println("&gt;&gt; Registration CONFIRMED! Reg No: " + regId + " | " + sName
+            + " | Course " + cId + " | Paid Rs." + paid);
+        System.out.println("&gt;&gt; Acknowledgment sent to student and registrar.");
+    }
+}
+
+public class CourseRegistration {
+    public static void main(String[] args){
+        Scanner sc = new Scanner(System.in);
+        CourseCatalog cat = new CourseCatalog();
+        System.out.println("===== ONLINE COURSE REGISTRATION =====");
+        System.out.print("Enter student name: ");            String name = sc.nextLine();
+        System.out.print("Enter department (CSE/ECE...): "); String dept = sc.nextLine();
+        System.out.print("Login - enter password: ");        sc.nextLine();
+        System.out.println("Login successful.");
+        cat.viewCourses();
+
+        System.out.print("Enter course id to register: ");
+        int cid = sc.nextInt();
+        if(!cat.isAvailable(cid)){ System.out.println("&gt;&gt; Course NOT available (no seats)."); return; }
+        ReserveCourse rc = new ReserveCourse();
+        if(!rc.checkEligibility(dept, cat.criteriaOf(cid))){
+            System.out.println("&gt;&gt; Not eligible for this course."); return;
+        }
+        System.out.print("Course available! Enter amount to pay (Rs." + cat.feeOf(cid) + "): ");
+        rc.confirmRegistration(name, 101, "" + cid, sc.nextDouble());
+    }
+}</pre>
+                </div>
+                <p><b>Result:</b> Thus the Online Course Registration System application was successfully designed and
+                    the output was verified.</p>
+            </div>
+        </div>
+
+        <!-- ============ 5 PASSPORT ============ -->
+        <div class="exp">
+            <div class="ehead" onclick="tg(this)"><span class="num">5</span>
+                <h3>Passport Automation System</h3><label onclick="event.stopPropagation()"><input type="checkbox"
+                        class="done" onchange="track()"></label><span class="arrow">▾</span>
+            </div>
+            <div class="ebody">
+                <span class="tag t-uc">ALL DIAGRAMS + STATE CHART</span><span class="tag t-java">☕ JAVA</span>
+                <h4>Aim</h4>
+                <p>Draw UML diagrams [use case, class, sequence, collaboration, state chart, activity, component,
+                    deployment] for the Passport automation system.</p>
+                <h4>Problem (3 lines)</h4>
+                <p>Effective passport dispatch; minimizes manual work. Online form verified against database → forwarded
+                    to regional administrator (Ministry of External Affairs) → appointment for document verification →
+                    <b>police verification</b> → status online → passport dispatched.</p>
+                <h4>Actors &amp; Use Cases</h4>
+                <div class="term">
+                    <pre>Actors: Police, Applicant(person), Database, Passport verifier, Registration verifier
+Use cases: Login, Person detail, View, Maintenance</pre>
+                </div>
+                <h4>Class Diagram</h4>
+                <table>
+                    <tr>
+                        <th>Class</th>
+                        <th>Attributes</th>
+                        <th>Operations</th>
+                    </tr>
+                    <tr>
+                        <td><b>login</b></td>
+                        <td>name, pwd</td>
+                        <td>done()</td>
+                    </tr>
+                    <tr>
+                        <td><b>login control</b></td>
+                        <td>name, pwd</td>
+                        <td>enter()</td>
+                    </tr>
+                    <tr>
+                        <td><b>person details</b></td>
+                        <td>person name, dateof birth, age, sex, address, phno</td>
+                        <td>details updated()</td>
+                    </tr>
+                    <tr>
+                        <td><b>verification</b></td>
+                        <td>person name, address, ration card no</td>
+                        <td>verified()</td>
+                    </tr>
+                    <tr>
+                        <td><b>view</b></td>
+                        <td>person name, dateof birth, age, sex, address, phno</td>
+                        <td>display()</td>
+                    </tr>
+                    <tr>
+                        <td><b>db</b></td>
+                        <td>person name, dateof birth, age, sex, address, phno</td>
+                        <td>updated()</td>
+                    </tr>
+                </table>
+                <div class="term">
+                    <pre>SEQUENCE FLOW (4 messages):
+1. Passport verifier → register form   : select person name
+2. register form → register controller : verify person name &amp; ration card
+3. Passport verifier → register form   : checked details
+4. Database → Passport verifier        : msg: access denied
+
+STATE CHART: ● → [Passport Automation System] → [New Registration] → [Enter Details] → [Register] → ◉
+
+ACTIVITY: ● → passport automation system → adminpanel → enter user name password
+  → ◇ authendication succeed? ─ yes → display admin panel → display yet-to-be-processed → ◉
+                               └ no → enter valid user name password → ◉</pre>
+                </div>
+                <h4 class="java">☕ Java — PassportAutomation.java (login: admin/admin)</h4>
+                <div class="cmd"><button class="copy" onclick="cp(this)">Copy Code</button>
+                    <pre>// File: PassportAutomation.java
+import java.util.Scanner;
+
+class Login {
+    String name = "admin", pwd = "admin";
+    boolean done(String n, String p){ return name.equals(n) &amp;&amp; pwd.equals(p); }
+}
+class LoginControl {
+    void enter(){ System.out.println("&gt;&gt; Admin login successful. Welcome to Admin Panel."); }
+}
+class PersonDetails {
+    String personName, dob, sex, address; int age; long phno;
+    void read(Scanner sc){
+        System.out.print("Person name: ");  personName = sc.nextLine();
+        System.out.print("DOB (dd/mm/yyyy): "); dob = sc.nextLine();
+        System.out.print("Age: ");          age = sc.nextInt(); sc.nextLine();
+        System.out.print("Sex: ");          sex = sc.nextLine();
+        System.out.print("Address: ");      address = sc.nextLine();
+        System.out.print("Phone: ");        phno = sc.nextLong(); sc.nextLine();
+    }
+    void detailsUpdated(){ System.out.println("&gt;&gt; Person details updated in system."); }
+}
+class Verification {
+    boolean verified(String rationCardNo){ return rationCardNo.length() &gt;= 5; }
+    void policeVerify(){ System.out.println("&gt;&gt; Police verification: CLEARED"); }
+}
+class View {
+    void display(PersonDetails p, String status){
+        System.out.println("--- Application Status ---");
+        System.out.println("Name: " + p.personName + " | Age: " + p.age + " | Status: " + status);
+    }
+}
+class DB {
+    void updated(PersonDetails p){
+        System.out.println("&gt;&gt; Database updated. Passport will be dispatched to " + p.address);
+    }
+}
+
+public class PassportAutomation {
+    public static void main(String[] args){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("===== PASSPORT AUTOMATION SYSTEM =====");
+        Login lg = new Login();
+        System.out.print("Admin username: "); String u = sc.nextLine();
+        System.out.print("Admin password: "); String p = sc.nextLine();
+        if(!lg.done(u, p)){ System.out.println("&gt;&gt; Invalid login! Re-enter valid credentials."); return; }
+        new LoginControl().enter();
+
+        PersonDetails pd = new PersonDetails();
+        System.out.println("--- New Registration: Enter Details ---");
+        pd.read(sc);
+        pd.detailsUpdated();
+
+        System.out.print("Enter Ration Card No: ");
+        Verification vf = new Verification();
+        if(!vf.verified(sc.nextLine())){ System.out.println("&gt;&gt; Verification FAILED."); return; }
+        vf.policeVerify();
+
+        new DB().updated(pd);
+        new View().display(pd, "PASSPORT DISPATCHED");
+    }
+}</pre>
+                </div>
+                <p><b>Result:</b> Thus, Passport Automation System application was successfully designed and the output
+                    was verified.</p>
+            </div>
+        </div>
+
+        <!-- ============ 6 ATM ============ -->
+        <div class="exp">
+            <div class="ehead" onclick="tg(this)"><span class="num">6</span>
+                <h3>ATM Management System ⭐</h3><label onclick="event.stopPropagation()"><input type="checkbox"
+                        class="done" onchange="track()"></label><span class="arrow">▾</span>
+            </div>
+            <div class="ebody">
+                <span class="tag t-uc">ALL DIAGRAMS — BIGGEST</span><span class="tag t-java">☕ JAVA</span>
+                <h4>Aim</h4>
+                <p>Draw UML diagrams [use case, class, activity, sequence, collaboration, state chart, component,
+                    deployment] for the ATM system.</p>
+                <h4>Problem (3 lines)</h4>
+                <p>ATM = automated banking; most frequent transaction = <b>withdrawal</b>. Withdraw allowed while
+                    account balance &gt; amount. Placed in malls, airports, railway stations. User-friendly interface;
+                    help manuals provided.</p>
+                <h4>Use Case Diagram</h4>
+                <div class="topo">
+                    <pre>[Operator]──►(System Startup)(System Shutdown)(Maintenance)
+[Customer]──►(Session)──«include»──►(Transaction)
+(Withdrawal)(Deposit)(Transfer)(Inquiry) ──extend──►(Transaction)◄──«extend»──(Invalid PIN)
+[Bank]──────►(Transaction)</pre>
+                </div>
+                <h4>Class Diagram (with generalizations!)</h4>
+                <table>
+                    <tr>
+                        <th>Class</th>
+                        <th>Attributes</th>
+                        <th>Operations</th>
+                    </tr>
+                    <tr>
+                        <td><b>Bank</b></td>
+                        <td>code, address</td>
+                        <td>manages(), maintains()</td>
+                    </tr>
+                    <tr>
+                        <td><b>ATMInfo</b></td>
+                        <td>location, managedBy</td>
+                        <td>identifies(), transactions()</td>
+                    </tr>
+                    <tr>
+                        <td><b>Customer</b></td>
+                        <td>name, address, dob</td>
+                        <td>owns()</td>
+                    </tr>
+                    <tr>
+                        <td><b>DebitCard</b></td>
+                        <td>cardNo, ownedBy</td>
+                        <td>access()</td>
+                    </tr>
+                    <tr>
+                        <td><b>Account</b> (parent)</td>
+                        <td>type, owner</td>
+                        <td>—</td>
+                    </tr>
+                    <tr>
+                        <td><b>CurrentAccount / SavingsAccount</b></td>
+                        <td>accountNo, balance</td>
+                        <td>debit(), credit()</td>
+                    </tr>
+                    <tr>
+                        <td><b>ATMTransaction</b> (parent)</td>
+                        <td>transactionID, date, type</td>
+                        <td>modifies()</td>
+                    </tr>
+                    <tr>
+                        <td><b>Withdrawl / Query / Transfer / PINValidation</b></td>
+                        <td>amount / queryID,type / amount,accountNo / oldPIN,newPIN</td>
+                        <td>withdraw() / processing() / — / pinChange()</td>
+                    </tr>
+                </table>
+                <div class="term">
+                    <pre>SEQUENCE FLOW (17 messages — Customer | ATM | Account):
+ 1. Customer → ATM : insert ATM card      10. ATM → Account      : processTransaction()
+ 2. ATM → Customer     : request PIN      11. Account → ATM      : transaction successful
+ 3. Customer → ATM     : PIN entered      12. ATM → Customer     : dispense cash
+ 4. ATM → Account      : verify PIN       13. ATM → Customer     : request to take cash
+ 5. Account → ATM      : PIN OK           14. Customer → ATM     : take cash
+ 6. ATM → Customer     : request option   15. ATM → Customer     : request continuation
+ 7. Customer → ATM     : option entered   16. Customer → ATM     : terminate
+ 8. ATM → Customer     : request amount   17. ATM → Customer     : print receipt
+ 9. Customer → ATM     : amount entered
+
+STATE CHART: ● → [Reading Card] ─Card Not Readable─→ [Ejecting Card]
+  →Card Read Successfully→ [Reading PIN] ─Cancel─→ [Ejecting]
+  →PIN Read Successfully→ [Choosing Transaction] ◄─Another Transaction─┐
+  →Transaction Chosen→ [Performing Transaction] ─Finished→ [Ejecting Card] → ◉</pre>
+                </div>
+                <h4 class="java">☕ Java — ATMBank.java (PIN: 1111 — shows Inheritance + Encapsulation + Polymorphism)
+                </h4>
+                <div class="cmd"><button class="copy" onclick="cp(this)">Copy Code</button>
+                    <pre>// File: ATMBank.java
+import java.util.Scanner;
+
+abstract class Account {                        // ENCAPSULATION (private balance)
+    long accountNo; String type; private double balance;
+    Account(long no, String t, double b){ accountNo = no; type = t; balance = b; }
+    void debit(double amt){
+        if(amt &gt; balance){ System.out.println("&gt;&gt; Insufficient balance! (Rs." + balance + ")"); return; }
+        balance -= amt; System.out.println("&gt;&gt; Debited Rs." + amt + " | Balance: Rs." + balance);
+    }
+    void credit(double amt){ balance += amt; System.out.println("&gt;&gt; Credited Rs." + amt + " | Balance: Rs." + balance); }
+    void showBalance(){ System.out.println("&gt;&gt; A/C " + accountNo + " (" + type + ") Balance: Rs." + balance); }
+}
+class SavingsAccount extends Account {          // INHERITANCE (as in class diagram)
+    SavingsAccount(long no, double b){ super(no, "Savings", b); }
+}
+class CurrentAccount extends Account {
+    CurrentAccount(long no, double b){ super(no, "Current", b); }
+}
+
+class DebitCard {
+    long pin = 1111;
+    boolean access(long p){ return pin == p; }
+}
+
+class ATMTransaction {                          // parent of all transactions
+    static int transactionID = 1000;
+    ATMTransaction(String type){
+        transactionID++;
+        System.out.println("&gt;&gt; Txn #" + transactionID + " : " + type);
+    }
+}
+class Withdrawal extends ATMTransaction {
+    double amount;
+    Withdrawal(double amt){ super("WITHDRAWAL"); amount = amt; }
+    void withdraw(Account a){ a.debit(amount); }
+}
+class Deposit extends ATMTransaction {
+    double amount;
+    Deposit(double amt){ super("DEPOSIT"); amount = amt; }
+    void deposit(Account a){ a.credit(amount); }
+}
+class Transfer extends ATMTransaction {
+    double amount;
+    Transfer(double amt){ super("TRANSFER"); amount = amt; }
+    void transfer(Account from, Account to){ from.debit(amount); to.credit(amount); }
+}
+class Query extends ATMTransaction {
+    Query(){ super("BALANCE QUERY"); }
+    void processing(Account a){ a.showBalance(); }
+}
+class PINValidation extends ATMTransaction {
+    PINValidation(){ super("PIN VALIDATION"); }
+    boolean pinChange(long entered, long actual){ return entered == actual; }
+}
+
+public class ATMBank {
+    public static void main(String[] args){
+        Scanner sc = new Scanner(System.in);
+        SavingsAccount savings = new SavingsAccount(1001, 5000);
+        CurrentAccount current = new CurrentAccount(2002, 10000);
+        DebitCard card = new DebitCard();
+
+        System.out.println("===== ATM MANAGEMENT SYSTEM =====");
+        System.out.print("Insert card... Enter PIN: ");
+        if(!new PINValidation().pinChange(sc.nextLong(), card.pin)){
+            System.out.println("&gt;&gt; Invalid PIN! Card ejected."); return;
+        }
+        System.out.println("&gt;&gt; PIN OK. Welcome!");
+        int opt;
+        do {
+            System.out.println("\n1.Withdraw  2.Deposit  3.Transfer  4.Balance  5.Exit");
+            System.out.print("Choose option: ");
+            opt = sc.nextInt();
+            switch(opt){
+                case 1: System.out.print("Amount: ");
+                        new Withdrawal(sc.nextDouble()).withdraw(savings); break;
+                case 2: System.out.print("Amount: ");
+                        new Deposit(sc.nextDouble()).deposit(savings); break;
+                case 3: System.out.print("Amount (Savings-&gt;Current): ");
+                        new Transfer(sc.nextDouble()).transfer(savings, current); break;
+                case 4: new Query().processing(savings);
+                        new Query().processing(current); break;
+                case 5: System.out.println("&gt;&gt; Take cash &amp; receipt. Thank you!"); break;
+                default: System.out.println("&gt;&gt; Invalid option!");
+            }
+        } while(opt != 5);
+    }
+}</pre>
+                </div>
+                <p><b>Result:</b> Thus, ATM System application was successfully designed and the output was verified.
+                </p>
+            </div>
+        </div>
+
+        <!-- ============ 7 HOSPITAL ============ -->
+        <div class="exp">
+            <div class="ehead" onclick="tg(this)"><span class="num">7</span>
+                <h3>Hospital Management System</h3><label onclick="event.stopPropagation()"><input type="checkbox"
+                        class="done" onchange="track()"></label><span class="arrow">▾</span>
+            </div>
+            <div class="ebody">
+                <span class="tag t-uc">ALL DIAGRAMS</span><span class="tag t-java">☕ JAVA</span>
+                <h4>Aim</h4>
+                <p>To develop the problem statement for Hospital Management System.</p>
+                <h4>Problem statement (write exactly!)</h4>
+                <div class="term">
+                    <pre>Objective:  To develop a software system that streamlines hospital operations,
+            enhances patient care, and improves overall efficiency.
+Challenges: Inefficient patient management, lack of centralized information,
+            difficulty in scheduling appointments, inventory management issues.</pre>
+                </div>
+                <h4>Use Case (Receptionist) &amp; Activity (swim lanes)</h4>
+                <div class="topo">
+                    <pre>[Receptionist]──►(Schedule Patient Appointment)(Patient Registration)
+   (Patient Hospital Admission)─«include»─►(Inpatient─«include»─►Bed Allotment)(Outpatient)
+   (File Insurance Forms/Claims)(File Medical Reports)
+
+ACTIVITY: ● → Start → Inquire for Admission or Check-up → [HMS] Show Services Information
+ → Process an Appointment → [HMS] Display "Please Fill-out the Form" → Provide Information
+ → [HMS] Save Information and Process Transaction → Get the Schedule Provided
+ ← [HMS] Generate Schedule for the Appointment → ◇ Another Transaction? ─ Yes → (loop)
+                                                 └ No → ◉ End</pre>
+                </div>
+                <h4>Class Diagram</h4>
+                <table>
+                    <tr>
+                        <th>Class</th>
+                        <th>Attributes</th>
+                        <th>Operations</th>
+                    </tr>
+                    <tr>
+                        <td><b>Medicine</b></td>
+                        <td>#id:int, +name, +description, +price, +dateDue</td>
+                        <td>add(), update()</td>
+                    </tr>
+                    <tr>
+                        <td><b>Transaction</b></td>
+                        <td>#id:int, +details, +date</td>
+                        <td>update()</td>
+                    </tr>
+                    <tr>
+                        <td><b>Physician</b></td>
+                        <td>+license:string</td>
+                        <td>add(), update()</td>
+                    </tr>
+                    <tr>
+                        <td><b>Patient</b></td>
+                        <td>+category:string</td>
+                        <td>enableUser(), disableUser()</td>
+                    </tr>
+                    <tr>
+                        <td><b>Admission</b></td>
+                        <td>#id:int, +date, +patientname, +findings</td>
+                        <td>update()</td>
+                    </tr>
+                    <tr>
+                        <td><b>Prescription</b></td>
+                        <td>#id:int, +name, +details, +date</td>
+                        <td>add(), update()</td>
+                    </tr>
+                    <tr>
+                        <td><b>Admin</b></td>
+                        <td>#id:int, +name, +age, -username, -password</td>
+                        <td>create(), update()</td>
+                    </tr>
+                </table>
+                <div class="term">
+                    <pre>SEQUENCE FLOW (Doctor as actor):
+1. Doctor → HMS           : login account
+2. HMS → Patient Database : verify account
+   [alt] valid → proceed to transaction | invalid → "your account is invalid"
+3. Doctor → HMS           : checks patient records
+4. HMS → Patient Database : process transaction → patient information
+5. Doctor → HMS           : checks patient medical history
+   [alt] results OK → logout account | NOT OK → must give treatments
+6. Doctor → HMS           : prescribe required treatment
+7. HMS → Treatment Required: process transaction → treatment given
+
+DEPLOY: [Admin Work Station <<Device>> + HMS <<Software>>] ──ISP──
+        [Web Server <<Online Server>>] ──TCP/IP── [Physician Desktop] ──HTTPS── [Patient's PC]</pre>
+                </div>
+                <h4 class="java">☕ Java — HospitalManagement.java (admin/admin123)</h4>
+                <div class="cmd"><button class="copy" onclick="cp(this)">Copy Code</button>
+                    <pre>// File: HospitalManagement.java
+import java.util.Scanner;
+
+class Admin {
+    String username = "admin", password = "admin123", name = "Dr.Kumar";
+    boolean login(String u, String p){ return username.equals(u) &amp;&amp; password.equals(p); }
+    void create(){ System.out.println("&gt;&gt; Admin " + name + " logged in."); }
+}
+class Patient {
+    String name, category; boolean enabled = true;
+    Patient(String n, String c){ name = n; category = c; }
+    void enableUser(){ System.out.println("&gt;&gt; Patient " + name + " admitted (" + category + ")."); }
+    void disableUser(){ System.out.println("&gt;&gt; Patient " + name + " discharged."); }
+}
+class Physician {
+    String license = "TN-MED-9090", name;
+    Physician(String n){ name = n; }
+    void add(){ System.out.println("&gt;&gt; Physician " + name + " (License " + license + ") assigned."); }
+}
+class Admission {
+    Admission(int id, String date, String patientname, String findings){
+        System.out.println("&gt;&gt; Admission #" + id + " | " + patientname + " | " + date + " | " + findings);
+    }
+}
+class Prescription {
+    void add(int id, String med, String dose, String date){
+        System.out.println("&gt;&gt; Prescription #" + id + ": " + med + " | " + dose + " | " + date);
+    }
+}
+class Medicine {
+    String name; double price;
+    Medicine(String n, double p){ name = n; price = p; }
+}
+class Transaction {
+    int id; double amount;
+    Transaction(int id, String details, double amount){
+        this.id = id; this.amount = amount;
+        System.out.println("&gt;&gt; Bill: Rs." + amount + " for " + details);
+    }
+    void update(){ System.out.println("&gt;&gt; Transaction #" + id + " recorded."); }
+}
+
+public class HospitalManagement {
+    public static void main(String[] args){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("===== HOSPITAL MANAGEMENT SYSTEM =====");
+        Admin a = new Admin();
+        System.out.print("Admin username: "); String u = sc.nextLine();
+        System.out.print("Admin password: "); String p = sc.nextLine();
+        if(!a.login(u, p)){ System.out.println("&gt;&gt; Invalid admin!"); return; }
+        a.create();
+
+        System.out.print("Patient name: ");                    String pn = sc.nextLine();
+        System.out.print("Category (Inpatient/Outpatient): "); String cat = sc.nextLine();
+        Patient pt = new Patient(pn, cat); pt.enableUser();
+
+        System.out.print("Assign physician name: ");
+        new Physician(sc.nextLine()).add();
+        new Admission(1, "24-06-2025", pn, "General check-up");
+
+        new Prescription().add(1, "Paracetamol", "500mg, 3 times a day", "24-06-2025");
+        Medicine m = new Medicine("Paracetamol", 30.0);
+
+        Transaction t = new Transaction(1, "Consultation + " + m.name, 300 + m.price);
+        t.update();
+        pt.disableUser();
+    }
+}</pre>
+                </div>
+                <p><b>Result:</b> Thus, the Hospital management system has been successfully executed and codes are
+                    generated.</p>
+            </div>
+        </div>
+
+        <!-- ============ 8 CONFERENCE ============ -->
+        <div class="exp">
+            <div class="ehead" onclick="tg(this)"><span class="num">8</span>
+                <h3>Conference Management System</h3><label onclick="event.stopPropagation()"><input type="checkbox"
+                        class="done" onchange="track()"></label><span class="arrow">▾</span>
+            </div>
+            <div class="ebody">
+                <span class="tag t-uc">ALL DIAGRAMS</span><span class="tag t-java">☕ JAVA</span>
+                <h4>Aim</h4>
+                <p>To develop a project on Conference management system using Rational Rose Software.</p>
+                <h4>Problem (6-step flow — write exactly!)</h4>
+                <div class="term">
+                    <pre>1. The candidate login to the conference management system
+2. The paper title is submitted
+3. The paper is reviewed by the reviewer
+4. The reviewer sends acknowledgement to the candidate (SELECTED or REJECTED)
+5. Based on the selection, the best candidate is selected
+6. Finally, the candidate registers all details</pre>
+                </div>
+                <h4>Use Case &amp; Sequence</h4>
+                <div class="topo">
+                    <pre>[Candidate]──►(paper Submission)(send revised paper)(registration)
+[Reviewer]────►(review the paper)(send confirmation details)
+
+SEQ: 1. Candidate→submit: submit the paper  2. submit→reviewer: review the paper
+     3. reviewer→candidate: confirmation    4. candidate→submit: revised &amp; camera ready paper
+     5. candidate→database: registration
+COLLAB: 1.Submit paper 2.review paper 3.Send confirmation 4.Send revised paper
+        5.Register 6.Send schedule</pre>
+                </div>
+                <h4>Class Diagram</h4>
+                <table>
+                    <tr>
+                        <th>Class</th>
+                        <th>Attributes</th>
+                        <th>Operations</th>
+                    </tr>
+                    <tr>
+                        <td><b>candidateInfo</b></td>
+                        <td>candId, candName, age, qualification, institutionName, gender, phoneno, emailid, paperTitle
+                        </td>
+                        <td>submitPaper(), sendCamReadyPaper(), register()</td>
+                    </tr>
+                    <tr>
+                        <td><b>reviewer</b></td>
+                        <td>reviewerId, reviewerName, status, noofpaperrecd</td>
+                        <td>reviewPaper():String, sendConfrmMsg()</td>
+                    </tr>
+                    <tr>
+                        <td><b>conferenceInfo</b></td>
+                        <td>conferenceTitle, dateOfConference, conductingInsti, address, emailId, contacno</td>
+                        <td>addConfe(), updateConfe()</td>
+                    </tr>
+                    <tr>
+                        <td><b>registration</b></td>
+                        <td>candId, regDate, DDno, bankname, dateOfDD, noofRegLCand, scheduleTime, paperId</td>
+                        <td>confirmRegl(), sendSchedule()</td>
+                    </tr>
+                </table>
+                <h4 class="java">☕ Java — ConferenceManagement.java</h4>
+                <div class="cmd"><button class="copy" onclick="cp(this)">Copy Code</button>
+                    <pre>// File: ConferenceManagement.java
+import java.util.Scanner;
+
+class CandidateInfo {
+    int candId = 1; String candName, paperTitle;
+    void submitPaper(String n, String t){
+        candName = n; paperTitle = t;
+        System.out.println("&gt;&gt; Paper '" + t + "' submitted by " + n);
+    }
+    void register(double ddAmt, String bank){
+        System.out.println("&gt;&gt; Registration done. DD Rs." + ddAmt + " of " + bank + " bank.");
+    }
+}
+class Reviewer {
+    String reviewerName = "Dr.Rao"; int noofpaperrecd = 0;
+    String reviewPaper(){
+        noofpaperrecd++;
+        System.out.println("&gt;&gt; Reviewer " + reviewerName + " reviewing paper #" + noofpaperrecd + "...");
+        return "SELECTED";
+    }
+    void sendConfrmMsg(String n, String status){
+        System.out.println("&gt;&gt; Acknowledgement to " + n + ": Paper " + status);
+    }
+}
+class ConferenceInfo {
+    void addConfe(){
+        System.out.println("&gt;&gt; Conference: ICACCS 2025 at Sathyabama, Chennai");
+    }
+}
+class Registration {
+    void confirmRegl(String n){ System.out.println("&gt;&gt; Registration confirmed for " + n); }
+    void sendSchedule(String n){ System.out.println("&gt;&gt; " + n + ", your schedule: 10:00 AM, Day 2"); }
+}
+
+public class ConferenceManagement {
+    public static void main(String[] args){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("===== CONFERENCE MANAGEMENT SYSTEM =====");
+        new ConferenceInfo().addConfe();
+        CandidateInfo c = new CandidateInfo();
+        System.out.print("Candidate name: "); String n = sc.nextLine();
+        System.out.print("Paper title: ");    String t = sc.nextLine();
+        c.submitPaper(n, t);
+
+        Reviewer r = new Reviewer();
+        String status = r.reviewPaper();
+        r.sendConfrmMsg(n, status);
+
+        if(status.equals("SELECTED")){
+            System.out.print("Enter DD amount for registration: Rs.");
+            double amt = sc.nextDouble(); sc.nextLine();
+            System.out.print("Bank name: ");
+            c.register(amt, sc.nextLine());
+            Registration reg = new Registration();
+            reg.confirmRegl(n);
+            reg.sendSchedule(n);
+        } else System.out.println("&gt;&gt; Paper rejected. Better luck next time!");
+    }
+}</pre>
+                </div>
+                <p><b>Result:</b> Thus, the Conference management system has been successfully executed and codes are
+                    generated.</p>
+            </div>
+        </div>
+
+        <!-- CHEAT -->
+        <div class="cheat">
+            <h3>⚡ EXAM FORMULA</h3>
+            <ul>
+                <li>1️⃣ Aim → 2️⃣ Problem Statement → 3️⃣ Actors → 4️⃣ Use Case Diagram → 5️⃣ Class Diagram → 6️⃣
+                    Sequence Diagram → 7️⃣ Activity/Collab/State → 8️⃣ Component + Deployment → 9️⃣ Result</li>
+                <li>🔑 Notation: actor=stick figure • use case=ellipse • class=rectangle(3 parts) • generalization=▷ •
+                    include/extend=--▷ • start=● • end=◉ • component=box+tabs • node=3D cube</li>
+                <li>☕ Java: file name = public class name → <b>javac X.java</b> → <b>java X</b></li>
+                <li>🔑 Logins: Passport/Hospital = admin • Exam student = pass123 • ATM PIN = 1111 • BookBank PIN = 1234
+                </li>
+                <li>📝 Visibility: + public, − private, # protected • ATM code = best example of Inheritance +
+                    Encapsulation + Polymorphism</li>
+            </ul>
+        </div>
+
+    </main>
+    <footer>SWE Lab Master v3 • S11BLH51 • UML + ☕ Java for all experiments • Works offline 🚀</footer>
+
+    <div id="pdfModal" onclick="if(event.target===this)closePDF()">
+        <div class="pdfwrap">
+            <div class="pdfhead">
+                <b>📖 Lab Manual PDF</b>
+                <div style="display:flex;align-items:center;gap:8px;">
+                    <a href="manual.pdf" target="_blank" class="btn ghost" style="padding:6px 12px;font-size:.82rem;text-decoration:none;display:inline-flex;align-items:center;gap:4px;">Open in new tab ↗</a>
+                    <a href="manual.pdf" download="manual.pdf" class="btn ghost" style="padding:6px 12px;font-size:.82rem;text-decoration:none;">Download ⬇</a>
+                    <button class="btn ghost" onclick="closePDF()" style="padding:6px 12px">✕ Close</button>
+                </div>
+            </div>
+            <object id="pdfObject" data="manual.pdf" type="application/pdf" style="flex:1;width:100%;height:100%;border:none;">
+                <iframe id="pdfFrame" src="manual.pdf" style="flex:1;width:100%;height:100%;border:none;">
+                    <div style="padding:30px;text-align:center;">
+                        <p style="margin-bottom:12px;">Your browser does not support embedding PDF files directly.</p>
+                        <a href="manual.pdf" target="_blank" class="btn gold" style="text-decoration:none;display:inline-block;">Open manual.pdf ↗</a>
+                    </div>
+                </iframe>
+            </object>
+            <div class="pdfnote">💡 Tip: You can also click <b>Open in new tab ↗</b> anytime to view the manual in full screen with your browser's PDF tools.</div>
+        </div>
+    </div>
+
+    <script>
+        function tg(h) { h.parentElement.classList.toggle('open') }
+        function toggleAll() { var c = document.querySelectorAll('.exp'); var anyClosed = [...c].some(x => !x.classList.contains('open')); c.forEach(x => x.classList.toggle('open', anyClosed)) }
+        function cp(b) { var t = b.parentElement.querySelector('pre').innerText; if (navigator.clipboard) { navigator.clipboard.writeText(t).then(() => { b.textContent = '✅ Copied!'; setTimeout(() => b.textContent = 'Copy Code', 1500) }) } else { var ta = document.createElement('textarea'); ta.value = t; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove(); b.textContent = '✅ Copied!'; setTimeout(() => b.textContent = 'Copy Code', 1500) } }
+        function openPDF() {
+            var modal = document.getElementById('pdfModal');
+            var frame = document.getElementById('pdfFrame');
+            var obj = document.getElementById('pdfObject');
+            if (frame && !frame.src.includes('manual.pdf')) frame.src = 'manual.pdf';
+            if (obj && !obj.data.includes('manual.pdf')) obj.data = 'manual.pdf';
+            modal.style.display = 'flex';
+        }
+        function closePDF() {
+            document.getElementById('pdfModal').style.display = 'none';
+        }
+        document.getElementById('search').addEventListener('input', function () { var q = this.value.toLowerCase(); document.querySelectorAll('.exp').forEach(function (e) { e.style.display = e.textContent.toLowerCase().includes(q) ? '' : 'none' }) });
+        function track() { var all = document.querySelectorAll('.done'); var n = [...all].filter(x => x.checked).length; document.getElementById('pfill').style.width = (n / all.length * 100) + '%'; document.getElementById('ptxt').textContent = 'Progress: ' + n + ' / ' + all.length + ' completed' + (n === all.length ? ' — 🎉 EXAM READY!' : ''); localStorage.setItem('swedone', JSON.stringify([...all].map(x => x.checked))) }
+        function toggleTheme() { document.body.classList.toggle('dark'); localStorage.setItem('swetheme', document.body.classList.contains('dark') ? 'd' : 'l') }
+        (function () { if (localStorage.getItem('swetheme') === 'd') document.body.classList.add('dark'); var s = JSON.parse(localStorage.getItem('swedone') || '[]'); document.querySelectorAll('.done').forEach((x, i) => { if (s[i]) x.checked = true }); track() })();
+    </script>
+</body>
+
+</html>
