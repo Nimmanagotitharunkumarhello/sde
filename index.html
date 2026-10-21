@@ -496,7 +496,8 @@
     <div class="topbar">
         <input id="search" placeholder="🔍 Search… (atm, passport, java, use case…)">
         <button class="btn gold" onclick="openPDF()">📖 Manual PDF</button>
-        <a href="manual.pdf" target="_blank" class="btn ghost" style="text-decoration:none" title="Open Manual in a new browser tab">↗ Open in Tab</a>
+        <a href="SDE.pdf" target="_blank" class="btn ghost" style="text-decoration:none"
+            title="Open Manual in a new browser tab">↗ Open in Tab</a>
         <button class="btn ghost" onclick="toggleTheme()">🌙/☀️</button>
         <button class="btn ghost" onclick="toggleAll()">Expand All</button>
     </div>
@@ -510,7 +511,9 @@
 
     <main id="list">
 
-        <div class="notecard">📌 <b>Manual PDF:</b> The lab manual is linked and ready! Click <b>📖 Manual PDF</b> to preview or <b>↗ Open in Tab</b> to view in full screen.<br>☕ <b>Java:</b> every card has a <b>Copy Code</b> button. Save each file as its <b>public
+        <div class="notecard">📌 <b>Manual PDF:</b> The lab manual is linked and ready! Click <b>📖 Manual PDF</b> to
+            preview or <b>↗ Open in Tab</b> to view in full screen.<br>☕ <b>Java:</b> every card has a <b>Copy Code</b>
+            button. Save each file as its <b>public
                 class name</b> (e.g. <b>BookBank.java</b>) → run: <b>javac BookBank.java</b> then <b>java BookBank</b>
         </div>
 
@@ -1117,7 +1120,8 @@ public class CourseRegistration {
                 <h4>Problem (3 lines)</h4>
                 <p>Effective passport dispatch; minimizes manual work. Online form verified against database → forwarded
                     to regional administrator (Ministry of External Affairs) → appointment for document verification →
-                    <b>police verification</b> → status online → passport dispatched.</p>
+                    <b>police verification</b> → status online → passport dispatched.
+                </p>
                 <h4>Actors &amp; Use Cases</h4>
                 <div class="term">
                     <pre>Actors: Police, Applicant(person), Database, Passport verifier, Registration verifier
@@ -1742,20 +1746,26 @@ public class ConferenceManagement {
             <div class="pdfhead">
                 <b>📖 Lab Manual PDF</b>
                 <div style="display:flex;align-items:center;gap:8px;">
-                    <a href="manual.pdf" target="_blank" class="btn ghost" style="padding:6px 12px;font-size:.82rem;text-decoration:none;display:inline-flex;align-items:center;gap:4px;">Open in new tab ↗</a>
-                    <a href="manual.pdf" download="manual.pdf" class="btn ghost" style="padding:6px 12px;font-size:.82rem;text-decoration:none;">Download ⬇</a>
+                    <a href="manual.pdf" target="_blank" class="btn ghost"
+                        style="padding:6px 12px;font-size:.82rem;text-decoration:none;display:inline-flex;align-items:center;gap:4px;">Open
+                        in new tab ↗</a>
+                    <a href="manual.pdf" download="manual.pdf" class="btn ghost"
+                        style="padding:6px 12px;font-size:.82rem;text-decoration:none;">Download ⬇</a>
                     <button class="btn ghost" onclick="closePDF()" style="padding:6px 12px">✕ Close</button>
                 </div>
             </div>
-            <object id="pdfObject" data="manual.pdf" type="application/pdf" style="flex:1;width:100%;height:100%;border:none;">
+            <object id="pdfObject" data="manual.pdf" type="application/pdf"
+                style="flex:1;width:100%;height:100%;border:none;">
                 <iframe id="pdfFrame" src="manual.pdf" style="flex:1;width:100%;height:100%;border:none;">
                     <div style="padding:30px;text-align:center;">
                         <p style="margin-bottom:12px;">Your browser does not support embedding PDF files directly.</p>
-                        <a href="manual.pdf" target="_blank" class="btn gold" style="text-decoration:none;display:inline-block;">Open manual.pdf ↗</a>
+                        <a href="manual.pdf" target="_blank" class="btn gold"
+                            style="text-decoration:none;display:inline-block;">Open manual.pdf ↗</a>
                     </div>
                 </iframe>
             </object>
-            <div class="pdfnote">💡 Tip: You can also click <b>Open in new tab ↗</b> anytime to view the manual in full screen with your browser's PDF tools.</div>
+            <div class="pdfnote">💡 Tip: You can also click <b>Open in new tab ↗</b> anytime to view the manual in full
+                screen with your browser's PDF tools.</div>
         </div>
     </div>
 
