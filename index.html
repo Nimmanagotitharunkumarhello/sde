@@ -1746,21 +1746,21 @@ public class ConferenceManagement {
             <div class="pdfhead">
                 <b>📖 Lab Manual PDF</b>
                 <div style="display:flex;align-items:center;gap:8px;">
-                    <a href="manual.pdf" target="_blank" class="btn ghost"
+                    <a href="SDE.pdf" target="_blank" class="btn ghost"
                         style="padding:6px 12px;font-size:.82rem;text-decoration:none;display:inline-flex;align-items:center;gap:4px;">Open
                         in new tab ↗</a>
-                    <a href="manual.pdf" download="manual.pdf" class="btn ghost"
+                    <a href="SDE.pdf" download="SDE.pdf" class="btn ghost"
                         style="padding:6px 12px;font-size:.82rem;text-decoration:none;">Download ⬇</a>
                     <button class="btn ghost" onclick="closePDF()" style="padding:6px 12px">✕ Close</button>
                 </div>
             </div>
-            <object id="pdfObject" data="manual.pdf" type="application/pdf"
+            <object id="pdfObject" data="SDE.pdf" type="application/pdf"
                 style="flex:1;width:100%;height:100%;border:none;">
-                <iframe id="pdfFrame" src="manual.pdf" style="flex:1;width:100%;height:100%;border:none;">
+                <iframe id="pdfFrame" src="SDE.pdf" style="flex:1;width:100%;height:100%;border:none;">
                     <div style="padding:30px;text-align:center;">
                         <p style="margin-bottom:12px;">Your browser does not support embedding PDF files directly.</p>
-                        <a href="manual.pdf" target="_blank" class="btn gold"
-                            style="text-decoration:none;display:inline-block;">Open manual.pdf ↗</a>
+                        <a href="SDE.pdf" target="_blank" class="btn gold"
+                            style="text-decoration:none;display:inline-block;">Open SDE.pdf ↗</a>
                     </div>
                 </iframe>
             </object>
@@ -1777,8 +1777,8 @@ public class ConferenceManagement {
             var modal = document.getElementById('pdfModal');
             var frame = document.getElementById('pdfFrame');
             var obj = document.getElementById('pdfObject');
-            if (frame && !frame.src.includes('manual.pdf')) frame.src = 'manual.pdf';
-            if (obj && !obj.data.includes('manual.pdf')) obj.data = 'manual.pdf';
+            if (frame && !frame.src.includes('SDE.pdf')) frame.src = 'SDE.pdf';
+            if (obj && !obj.data.includes('SDE.pdf')) obj.data = 'SDE.pdf';
             modal.style.display = 'flex';
         }
         function closePDF() {
