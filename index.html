@@ -448,11 +448,12 @@
             background: var(--card);
             border-radius: 12px;
             width: 100%;
-            max-width: 900px;
+            max-width: 960px;
             height: 90vh;
             display: flex;
             flex-direction: column;
-            overflow: hidden
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, .35)
         }
 
         .pdfhead {
@@ -460,23 +461,236 @@
             align-items: center;
             justify-content: space-between;
             padding: 10px 14px;
-            border-bottom: 1px solid var(--border)
+            border-bottom: 1px solid var(--border);
+            gap: 10px;
+            flex-wrap: wrap
         }
 
         .pdfhead b {
-            color: var(--pri)
+            color: var(--pri);
+            font-size: .95rem
         }
 
-        .pdfwrap iframe {
+        .pdf-modal-tabs {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap
+        }
+
+        .pdf-tab-pill {
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: .78rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: 1px solid var(--border);
+            background: var(--bg);
+            color: var(--sub);
+            transition: .2s
+        }
+
+        .pdf-tab-pill:hover,
+        .pdf-tab-pill.active {
+            background: var(--pri);
+            color: #fff;
+            border-color: var(--pri)
+        }
+
+        .pdfwrap iframe,
+        .pdfwrap object {
             flex: 1;
             border: none;
-            width: 100%
+            width: 100%;
+            height: 100%
         }
 
         .pdfnote {
             font-size: .8rem;
             color: var(--sub);
-            padding: 8px 14px
+            padding: 8px 14px;
+            border-top: 1px solid var(--border)
+        }
+
+        /* PDF Resource Cards Grid ("Column / Box") */
+        .pdf-section {
+            margin: 18px 0 24px
+        }
+
+        .pdf-section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 6px
+        }
+
+        .pdf-section-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--txt)
+        }
+
+        .pdf-section-sub {
+            font-size: .82rem;
+            color: var(--sub)
+        }
+
+        .pdf-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 14px
+        }
+
+        .pdf-card {
+            background: var(--card);
+            border: 2px solid var(--border);
+            border-radius: 14px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 12px;
+            cursor: pointer;
+            transition: all .25s ease;
+            position: relative;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, .04);
+            user-select: none
+        }
+
+        .pdf-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--pri);
+            box-shadow: 0 8px 22px rgba(124, 58, 237, .15)
+        }
+
+        .pdf-card-top {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px
+        }
+
+        .pdf-card-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.35rem;
+            flex-shrink: 0;
+            color: #fff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, .12)
+        }
+
+        .pdf-card-info {
+            flex: 1;
+            min-width: 0
+        }
+
+        .pdf-badge {
+            display: inline-block;
+            font-size: .68rem;
+            font-weight: 700;
+            letter-spacing: .5px;
+            text-transform: uppercase;
+            padding: 2px 8px;
+            border-radius: 99px;
+            margin-bottom: 5px
+        }
+
+        .badge-purple {
+            background: rgba(124, 58, 237, .12);
+            color: #7c3aed
+        }
+
+        .badge-green {
+            background: rgba(16, 185, 129, .15);
+            color: #059669
+        }
+
+        .badge-amber {
+            background: rgba(245, 158, 11, .15);
+            color: #d97706
+        }
+
+        body.dark .badge-purple {
+            background: rgba(124, 58, 237, .25);
+            color: #c084fc
+        }
+
+        body.dark .badge-green {
+            background: rgba(16, 185, 129, .25);
+            color: #34d399
+        }
+
+        body.dark .badge-amber {
+            background: rgba(245, 158, 11, .25);
+            color: #fbbf24
+        }
+
+        .pdf-card-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--txt);
+            margin-bottom: 4px;
+            line-height: 1.25
+        }
+
+        .pdf-card-desc {
+            font-size: .82rem;
+            color: var(--sub);
+            line-height: 1.35
+        }
+
+        .pdf-card-foot {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 10px;
+            border-top: 1px dashed var(--border);
+            gap: 8px
+        }
+
+        .pdf-open-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: .82rem;
+            font-weight: 600;
+            color: var(--pri);
+            padding: 6px 12px;
+            border-radius: 6px;
+            background: rgba(124, 58, 237, .08);
+            transition: .2s
+        }
+
+        .pdf-card:hover .pdf-open-btn {
+            background: var(--pri);
+            color: #fff
+        }
+
+        .pdf-tab-link {
+            font-size: .78rem;
+            color: var(--sub);
+            text-decoration: none;
+            padding: 4px 8px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            transition: .2s
+        }
+
+        .pdf-tab-link:hover {
+            color: var(--txt);
+            border-color: var(--pri);
+            background: var(--card)
         }
 
         @media(max-width:600px) {
@@ -495,10 +709,13 @@
 
     <div class="topbar">
         <input id="search" placeholder="🔍 Search… (atm, passport, java, use case…)">
-        <button class="btn gold" onclick="openPDF()">📖 Manual PDF</button>
-        <a href="SDE.pdf" target="_blank" class="btn ghost" style="text-decoration:none"
-            title="Open Manual in a new browser tab">↗ Open in Tab</a>
-        <button class="btn ghost" onclick="toggleTheme()">🌙/☀️</button>
+        <button class="btn gold" onclick="openPDF('SDE.pdf', '📖 Lab Manual (SDE.pdf)')"
+            title="Open Complete Lab Manual">📖 Manual</button>
+        <button class="btn gold" onclick="openPDF('Mini_Lab_Manual_3x3_Grid.pdf', '📑 Mini Lab Manual 3 (3x3 Grid)')"
+            title="Open Mini Lab Manual 3 (3x3 Grid)">📑 Mini Manual 3</button>
+        <button class="btn gold" onclick="openPDF('Scenario.pdf', '📋 Scenario PDF (All Scenarios)')"
+            title="Open All Scenarios PDF">📋 Scenario PDF</button>
+        <button class="btn ghost" onclick="toggleTheme()" title="Toggle Dark/Light Mode">🌙/☀️</button>
         <button class="btn ghost" onclick="toggleAll()">Expand All</button>
     </div>
 
@@ -511,8 +728,79 @@
 
     <main id="list">
 
-        <div class="notecard">📌 <b>Manual PDF:</b> The lab manual is linked and ready! Click <b>📖 Manual PDF</b> to
-            preview or <b>↗ Open in Tab</b> to view in full screen.<br>☕ <b>Java:</b> every card has a <b>Copy Code</b>
+        <!-- ============ PDF Resource Cards ("Column / Box") ============ -->
+        <section class="pdf-section">
+            <div class="pdf-section-header">
+                <div class="pdf-section-title">
+                    <span>📚 Quick PDF References</span>
+                </div>
+                <div class="pdf-section-sub">Click any box below to open the PDF directly</div>
+            </div>
+            <div class="pdf-grid">
+                <!-- Box 1: Lab Manual -->
+                <div class="pdf-card" onclick="openPDF('SDE.pdf', '📖 Lab Manual (SDE.pdf)')"
+                    title="Click to open Lab Manual">
+                    <div class="pdf-card-top">
+                        <div class="pdf-card-icon" style="background: linear-gradient(135deg, #7c3aed, #4c1d95);">📖
+                        </div>
+                        <div class="pdf-card-info">
+                            <span class="pdf-badge badge-purple">PRIMARY MANUAL</span>
+                            <h4 class="pdf-card-title">Lab Manual (SDE)</h4>
+                            <p class="pdf-card-desc">Complete lab syllabus, theory, diagrams &amp; Java code guide</p>
+                        </div>
+                    </div>
+                    <div class="pdf-card-foot">
+                        <span class="pdf-open-btn">▶ Open PDF</span>
+                        <a href="SDE.pdf" target="_blank" class="pdf-tab-link" onclick="event.stopPropagation()"
+                            title="Open in new browser tab">↗ New Tab</a>
+                    </div>
+                </div>
+
+                <!-- Box 2: Mini Lab Manual 3 -->
+                <div class="pdf-card"
+                    onclick="openPDF('Mini_Lab_Manual_3x3_Grid.pdf', '📑 Mini Lab Manual 3 (3x3 Grid)')"
+                    title="Click to open Mini Lab Manual 3">
+                    <div class="pdf-card-top">
+                        <div class="pdf-card-icon" style="background: linear-gradient(135deg, #059669, #10b981);">📑
+                        </div>
+                        <div class="pdf-card-info">
+                            <span class="pdf-badge badge-green">QUICK REVISION</span>
+                            <h4 class="pdf-card-title">Mini Lab Manual 3</h4>
+                            <p class="pdf-card-desc">3x3 Grid format quick reference, diagrams &amp; summaries</p>
+                        </div>
+                    </div>
+                    <div class="pdf-card-foot">
+                        <span class="pdf-open-btn">▶ Open PDF</span>
+                        <a href="Mini_Lab_Manual_3x3_Grid.pdf" target="_blank" class="pdf-tab-link"
+                            onclick="event.stopPropagation()" title="Open in new browser tab">↗ New Tab</a>
+                    </div>
+                </div>
+
+                <!-- Box 3: Scenario PDF -->
+                <div class="pdf-card" onclick="openPDF('Scenario.pdf', '📋 Scenario PDF (All Scenarios)')"
+                    title="Click to open Scenario PDF">
+                    <div class="pdf-card-top">
+                        <div class="pdf-card-icon" style="background: linear-gradient(135deg, #f59e0b, #d97706);">📋
+                        </div>
+                        <div class="pdf-card-info">
+                            <span class="pdf-badge badge-amber">PROBLEM STATEMENTS</span>
+                            <h4 class="pdf-card-title">Scenario PDF</h4>
+                            <p class="pdf-card-desc">All lab problem scenarios, case studies &amp; problem statements
+                            </p>
+                        </div>
+                    </div>
+                    <div class="pdf-card-foot">
+                        <span class="pdf-open-btn">▶ Open PDF</span>
+                        <a href="sereanio.pdf" target="_blank" class="pdf-tab-link" onclick="event.stopPropagation()"
+                            title="Open in new browser tab">↗ New Tab</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="notecard">📌 <b>PDF Resources:</b> Click any of the boxes above or topbar buttons to view the <b>Lab
+                Manual</b>, <b>Mini Lab Manual 3</b>, or <b>Scenario PDF</b> directly inside the viewer or open in full
+            screen.<br>☕ <b>Java:</b> every card has a <b>Copy Code</b>
             button. Save each file as its <b>public
                 class name</b> (e.g. <b>BookBank.java</b>) → run: <b>javac BookBank.java</b> then <b>java BookBank</b>
         </div>
@@ -1744,12 +2032,23 @@ public class ConferenceManagement {
     <div id="pdfModal" onclick="if(event.target===this)closePDF()">
         <div class="pdfwrap">
             <div class="pdfhead">
-                <b>📖 Lab Manual PDF</b>
+                <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+                    <b id="pdfModalTitle">📖 Lab Manual PDF</b>
+                    <div class="pdf-modal-tabs">
+                        <button class="pdf-tab-pill" id="tab-sde"
+                            onclick="openPDF('SDE.pdf', '📖 Lab Manual (SDE.pdf)')">Lab Manual</button>
+                        <button class="pdf-tab-pill" id="tab-mini"
+                            onclick="openPDF('Mini_Lab_Manual_3x3_Grid.pdf', '📑 Mini Lab Manual 3 (3x3 Grid)')">Mini
+                            Manual 3</button>
+                        <button class="pdf-tab-pill" id="tab-scenario"
+                            onclick="openPDF('Scenario.pdf', '📋 Scenario PDF (All Scenarios)')">Scenario PDF</button>
+                    </div>
+                </div>
                 <div style="display:flex;align-items:center;gap:8px;">
-                    <a href="SDE.pdf" target="_blank" class="btn ghost"
+                    <a id="pdfOpenTab" href="SDE.pdf" target="_blank" class="btn ghost"
                         style="padding:6px 12px;font-size:.82rem;text-decoration:none;display:inline-flex;align-items:center;gap:4px;">Open
                         in new tab ↗</a>
-                    <a href="SDE.pdf" download="SDE.pdf" class="btn ghost"
+                    <a id="pdfDownload" href="SDE.pdf" download="SDE.pdf" class="btn ghost"
                         style="padding:6px 12px;font-size:.82rem;text-decoration:none;">Download ⬇</a>
                     <button class="btn ghost" onclick="closePDF()" style="padding:6px 12px">✕ Close</button>
                 </div>
@@ -1759,13 +2058,13 @@ public class ConferenceManagement {
                 <iframe id="pdfFrame" src="SDE.pdf" style="flex:1;width:100%;height:100%;border:none;">
                     <div style="padding:30px;text-align:center;">
                         <p style="margin-bottom:12px;">Your browser does not support embedding PDF files directly.</p>
-                        <a href="SDE.pdf" target="_blank" class="btn gold"
-                            style="text-decoration:none;display:inline-block;">Open SDE.pdf ↗</a>
+                        <a id="pdfFallbackBtn" href="SDE.pdf" target="_blank" class="btn gold"
+                            style="text-decoration:none;display:inline-block;">Open PDF ↗</a>
                     </div>
                 </iframe>
             </object>
             <div class="pdfnote">💡 Tip: You can also click <b>Open in new tab ↗</b> anytime to view the manual in full
-                screen with your browser's PDF tools.</div>
+                screen with your browser's PDF tools, or switch between manuals with the tabs above.</div>
         </div>
     </div>
 
@@ -1773,17 +2072,55 @@ public class ConferenceManagement {
         function tg(h) { h.parentElement.classList.toggle('open') }
         function toggleAll() { var c = document.querySelectorAll('.exp'); var anyClosed = [...c].some(x => !x.classList.contains('open')); c.forEach(x => x.classList.toggle('open', anyClosed)) }
         function cp(b) { var t = b.parentElement.querySelector('pre').innerText; if (navigator.clipboard) { navigator.clipboard.writeText(t).then(() => { b.textContent = '✅ Copied!'; setTimeout(() => b.textContent = 'Copy Code', 1500) }) } else { var ta = document.createElement('textarea'); ta.value = t; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove(); b.textContent = '✅ Copied!'; setTimeout(() => b.textContent = 'Copy Code', 1500) } }
-        function openPDF() {
+        function openPDF(file, title) {
+            file = file || 'SDE.pdf';
+            title = title || '📖 Lab Manual PDF';
             var modal = document.getElementById('pdfModal');
             var frame = document.getElementById('pdfFrame');
             var obj = document.getElementById('pdfObject');
-            if (frame && !frame.src.includes('SDE.pdf')) frame.src = 'SDE.pdf';
-            if (obj && !obj.data.includes('SDE.pdf')) obj.data = 'SDE.pdf';
+            var titleEl = document.getElementById('pdfModalTitle');
+            var tabEl = document.getElementById('pdfOpenTab');
+            var dlEl = document.getElementById('pdfDownload');
+            var fallbackEl = document.getElementById('pdfFallbackBtn');
+
+            if (titleEl) titleEl.textContent = title;
+            if (tabEl) {
+                tabEl.href = file;
+                tabEl.title = 'Open ' + title + ' in new tab';
+            }
+            if (dlEl) {
+                dlEl.href = file;
+                dlEl.download = file;
+            }
+            if (fallbackEl) {
+                fallbackEl.href = file;
+                fallbackEl.textContent = 'Open ' + file + ' ↗';
+            }
+
+            document.querySelectorAll('.pdf-tab-pill').forEach(function (pill) {
+                pill.classList.remove('active');
+            });
+            if (file.includes('Mini')) {
+                var p = document.getElementById('tab-mini');
+                if (p) p.classList.add('active');
+            } else if (file.toLowerCase().includes('scenario') || file.toLowerCase().includes('sereanio')) {
+                var p = document.getElementById('tab-scenario');
+                if (p) p.classList.add('active');
+            } else {
+                var p = document.getElementById('tab-sde');
+                if (p) p.classList.add('active');
+            }
+
+            if (frame) frame.src = file;
+            if (obj) obj.data = file;
             modal.style.display = 'flex';
         }
         function closePDF() {
             document.getElementById('pdfModal').style.display = 'none';
         }
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') closePDF();
+        });
         document.getElementById('search').addEventListener('input', function () { var q = this.value.toLowerCase(); document.querySelectorAll('.exp').forEach(function (e) { e.style.display = e.textContent.toLowerCase().includes(q) ? '' : 'none' }) });
         function track() { var all = document.querySelectorAll('.done'); var n = [...all].filter(x => x.checked).length; document.getElementById('pfill').style.width = (n / all.length * 100) + '%'; document.getElementById('ptxt').textContent = 'Progress: ' + n + ' / ' + all.length + ' completed' + (n === all.length ? ' — 🎉 EXAM READY!' : ''); localStorage.setItem('swedone', JSON.stringify([...all].map(x => x.checked))) }
         function toggleTheme() { document.body.classList.toggle('dark'); localStorage.setItem('swetheme', document.body.classList.contains('dark') ? 'd' : 'l') }
